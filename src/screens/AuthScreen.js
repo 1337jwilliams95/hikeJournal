@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { getScreenWidth } from '../components/constants';
+import { connect } from 'react-redux';
+import {  doLogin } from '../actions/login_actions';
 import {
   Button,
   FormLabel,
@@ -11,20 +13,26 @@ import {
 const SCREEN_WIDTH = getScreenWidth();
 
 class AuthScreen extends Component {
+  componentWillReceiveProps(newProps){
+    if(newProps.token){
+      this.props.navigation.navigate('hike');
+    }
+  }
+  
   formTextChanged = text => {
     console.log(text);
   };
 
   emailSignIn = () => {
-    this.props.navigation.navigate('hike');
+    this.props.doLogin('email');
   }
 
   facebookSignIn = () => {
-    this.props.navigation.navigate('hike');
+    this.props.doLogin('facebook');
   }
 
   googleSignIn = () => {
-    this.props.navigation.navigate('hike');
+    this.props.doLogin('google');
   }
 
   render() {
@@ -105,4 +113,8 @@ const styles = StyleSheet.create({
     fontSize: 18
   }
 });
-export default AuthScreen;
+
+mapStateToProps = (state) => {
+  return {token: state.facebookLogin.token};
+}
+export default connect(mapStateToProps, {doLogin}) (AuthScreen);
