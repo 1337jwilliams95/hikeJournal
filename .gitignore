@@ -2,3 +2,4 @@ node_modules/**/*
 .expo/*
 npm-debug.*
 ./data
+src/components/constants.js
