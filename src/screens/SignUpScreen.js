@@ -1,49 +1,66 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { getScreenWidth } from '../components/constants';
+import { connect } from "react-redux";
 import {
   Button,
   FormLabel,
   FormInput,
   FormValidationMessage
 } from "react-native-elements";
+import { emailSignUp, signUpTextUpdate } from "../actions";
+import { getScreenWidth } from "../common";
 
 const SCREEN_WIDTH = getScreenWidth();
 
-
 class SignUpScreen extends Component {
-  
-  emailSignUp = (text) => {
-    this.props.navigation.navigate('hike');
+  emailSignUp = () => {
+    this.props.emailSignUp({
+      email: this.props.email,
+      password: this.props.password,
+      confirmPassword: this.props.confirmPassword
+    });
+  };
+
+  validationError = () => {
+    if(this.props.error){
+      return <FormValidationMessage>{this.props.error}</FormValidationMessage>
+    }
   }
 
   render() {
     return (
       <View style={styles.container}>
-      <View style={styles.textContainer}>
-        <Text style={{fontSize: 20}}>Hike Journal Sign Up</Text>
-      </View>
+        <View style={styles.textContainer}>
+          <Text style={{ fontSize: 20 }}>Hike Journal Sign Up</Text>
+        </View>
         <View style={styles.inputForm}>
-        <FormLabel>Trail Name</FormLabel>
-          <FormInput
-            onChangeText={this.formTextChanged}
-            placeholder="(Optional) Enter your trail name here"
-          />
           <FormLabel>Email</FormLabel>
           <FormInput
-            onChangeText={this.formTextChanged}
+            autoCapitalize='none'
             placeholder="Enter your email here"
+            value={this.props.email}
+            onChangeText={value =>
+              this.props.signUpTextUpdate({ prop: "email", value })}
           />
           <FormLabel>Password</FormLabel>
           <FormInput
-            onChangeText={this.formTextChanged}
+            autoCapitalize='none'
+            secureTextEntry
             placeholder="Enter your password here"
+            value={this.props.password}
+            onChangeText={value =>
+              this.props.signUpTextUpdate({ prop: "password", value })}
           />
           <FormLabel>Confirm Password</FormLabel>
           <FormInput
-            onChangeText={this.formTextChanged}
+            autoCapitalize='none'
+            secureTextEntry
             placeholder="Enter your password again here"
+            value={this.props.confirmPassword}
+            onChangeText={value =>
+              this.props.signUpTextUpdate({ prop: "confirmPassword", value })}
           />
+          {this.validationError()}
         </View>
         <Button
           title="Sign Up"
@@ -80,4 +97,14 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
-export default SignUpScreen;
+
+mapStateToProps = state => {
+  return {
+    email: state.signUpForm.email,
+    password: state.signUpForm.password,
+    confirmPassword: state.signUpForm.confirmPassword,
+    error: state.signUpForm.error
+  };
+};
+
+export default connect(mapStateToProps, {emailSignUp, signUpTextUpdate})(SignUpScreen);

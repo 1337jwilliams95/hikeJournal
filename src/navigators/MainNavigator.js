@@ -19,5 +19,4 @@ const MainNavigator = createSwitchNavigator({
   initialRouteName: 'authLoading'
 });
 
-const styles = StyleSheet.create({});
 export default MainNavigator;

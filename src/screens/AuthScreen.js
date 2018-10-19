@@ -1,80 +1,72 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { getScreenWidth } from '../components/constants';
-import { connect } from 'react-redux';
-import {  doLogin } from '../actions/login_actions';
+import { getScreenWidth } from "../common";
+import { connect } from "react-redux";
 import {
-  Button,
-  FormLabel,
-  FormInput,
-  FormValidationMessage
-} from "react-native-elements";
+  doGoogleLogin,
+  doFacebookLogin,
+  doEmailLogin,
+  signInTextUpdate
+} from "../actions";
+import { Button, FormLabel, FormInput, FormValidationMessage } from "react-native-elements";
 
 const SCREEN_WIDTH = getScreenWidth();
 
 class AuthScreen extends Component {
-  componentWillReceiveProps(newProps){
-    if(newProps.token){
-      this.props.navigation.navigate('hike');
+  verificationError() {
+    if(this.props.error){
+      return <FormValidationMessage>{this.props.error}</FormValidationMessage>
     }
-  }
-  
-  formTextChanged = text => {
-    console.log(text);
-  };
-
-  emailSignIn = () => {
-    this.props.doLogin('email');
-  }
-
-  facebookSignIn = () => {
-    this.props.doLogin('facebook');
-  }
-
-  googleSignIn = () => {
-    this.props.doLogin('google');
   }
 
   render() {
     return (
       <View style={styles.background}>
-      <View style={styles.container}>
-        <View style={styles.textContainer}>
-          <Text style={styles.text}>Hike Journal</Text>
-        </View>
+        <View style={styles.container}>
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>Hike Journal</Text>
+          </View>
 
-        <View style={styles.inputForm}>
-          <FormLabel>Email</FormLabel>
-          <FormInput
-            onChangeText={this.formTextChanged}
-            placeholder="Enter your email here"
+          <View style={styles.inputForm}>
+            <FormLabel>Email</FormLabel>
+            <FormInput
+            autoCapitalize='none'
+              onChangeText={value =>
+                this.props.signInTextUpdate({ prop: "email", value })}
+              placeholder="Enter your email here"
+              value={this.props.email}
+            />
+            <FormLabel>Password</FormLabel>
+            <FormInput
+              secureTextEntry
+              autoCapitalize='none'
+              onChangeText={value =>
+                this.props.signInTextUpdate({ prop: "password", value })}
+              placeholder="Enter your password here"
+              value={this.props.password}
+            />
+          </View>
+          {this.verificationError()}
+          <Button
+            title="Sign In"
+            buttonStyle={styles.button}
+            backgroundColor="#9D961C"
+            onPress={() =>
+              this.props.doEmailLogin(this.props.email, this.props.password)}
           />
-          <FormLabel>Password</FormLabel>
-          <FormInput
-            onChangeText={this.formTextChanged}
-            placeholder="Enter your password here"
+          <Button
+            title="Continue with Facebook"
+            buttonStyle={styles.button}
+            backgroundColor="#28726E"
+            onPress={this.props.doFacebookLogin}
+          />
+          <Button
+            title="Continue with Google"
+            buttonStyle={styles.button}
+            backgroundColor="#943E0F"
+            onPress={this.props.doGoogleLogin}
           />
         </View>
-
-        <Button
-          title="Sign In"
-          buttonStyle={styles.button}
-          backgroundColor="#9D961C"
-          onPress={this.emailSignIn}
-        />
-        <Button
-          title="Continue with Facebook"
-          buttonStyle={styles.button}
-          backgroundColor="#28726E"
-          onPress={this.facebookSignIn}
-        />
-        <Button
-          title="Continue with Google"
-          buttonStyle={styles.button}
-          backgroundColor="#943E0F"
-          onPress={this.googleSignIn}
-        />
-      </View>
       </View>
     );
   }
@@ -82,7 +74,7 @@ class AuthScreen extends Component {
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: '#FFF',
+    backgroundColor: "#FFF",
     flex: 1
   },
   container: {
@@ -90,7 +82,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
     marginLeft: 10,
-    marginRight: 10,
+    marginRight: 10
   },
   button: {
     marginTop: 5,
@@ -114,7 +106,16 @@ const styles = StyleSheet.create({
   }
 });
 
-mapStateToProps = (state) => {
-  return {token: state.facebookLogin.token};
-}
-export default connect(mapStateToProps, {doLogin}) (AuthScreen);
+mapStateToProps = state => {
+  return {
+    email: state.signInForm.email,
+    password: state.signInForm.password,
+    error: state.signInForm.error
+  };
+};
+export default connect(mapStateToProps, {
+  doFacebookLogin,
+  doEmailLogin,
+  doGoogleLogin,
+  signInTextUpdate
+})(AuthScreen);

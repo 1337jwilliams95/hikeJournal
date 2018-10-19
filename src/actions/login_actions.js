@@ -1,56 +1,99 @@
-import { FACEBOOK_APP_ID, GOOGLE_ANDROID_CLIENT_ID, GOOGLE_IOS_CLIENT_ID } from "../components/constants";
-import { LOGIN_SUCCESS, LOGIN_CANCELED, USER_TOKEN } from "./types";
-import { AsyncStorage } from "react-native";
-import { Facebook } from "expo";
+import { Facebook, Google } from "expo";
+import firebase from "firebase";
+import {
+  FACEBOOK_APP_ID,
+  GOOGLE_ANDROID_CLIENT_ID,
+  GOOGLE_IOS_CLIENT_ID,
+  GOOGLE_WEB_CLIENT_ID
+} from "../components/constants";
+import {
+  LOGIN_SUCCESS,
+  LOGIN_CANCELED,
+  LOGIN_VALIDATION_ERROR,
+  LOGIN_ERROR,
+  SIGN_IN_UPDATE
+} from "./types";
 
-export const doLogin = loginSystem => async dispatch => {
-  let token = await AsyncStorage.getItem(USER_TOKEN);
-  if (token) {
-    dispatch({ type: LOGIN_SUCCESS, payload: token });
-  } else {
-    switch (loginSystem) {
-      case "facebook":
-        doFacebookLogin(dispatch);
-      case "google":
-        doGoogleLogin(dispatch);
-      default:
-        return;
-    }
-  }
-};
+import { verifyEmail, verifyPassword } from "./email_verifications";
 
-const doFacebookLogin = async dispatch => {
+export const doFacebookLogin = () => async dispatch => {
   let {
     type,
     token
   } = await Facebook.logInWithReadPermissionsAsync(FACEBOOK_APP_ID, {
-    permission: ["public_profile"]
-    // behavior: 'native'
+    permission: ["email"]
+  });
+  loginToFirebase(
+    firebase.auth.FacebookAuthProvider.credential(token),
+    token,
+    type,
+    dispatch
+  );
+};
+
+export const doGoogleLogin = () => async dispatch => {
+  let { type, idToken, accessToken } = await Google.logInAsync({
+    androidClientId: GOOGLE_ANDROID_CLIENT_ID,
+    iosClientId: GOOGLE_IOS_CLIENT_ID,
+    webClientId: GOOGLE_WEB_CLIENT_ID,
+    scopes: ["profile", "email"]
   });
 
-  if (type === "cancel") {
-    return dispatch({ type: LOGIN_CANCELED });
-  }
-  await AsyncStorage.setItem(USER_TOKEN, token);
-  return dispatch({ type: LOGIN_SUCCESS, payload: token });
-};
-
-
-const doGoogleLogin = async dispatch => {
-  let {
+  loginToFirebase(
+    firebase.auth.GoogleAuthProvider.credential(idToken, accessToken),
+    idToken,
     type,
-    accessToken
-  } = await Expo.Google.logInAsync({
-              androidClientId: GOOGLE_ANDROID_CLIENT_ID,
-              iosClientId: GOOGLE_IOS_CLIENT_ID,
-              scopes: ['profile', 'email'],
-            });
+    dispatch
+  );
+};
 
+const loginToFirebase = (credential, token, type, dispatch) => {
   if (type === "cancel") {
     return dispatch({ type: LOGIN_CANCELED });
   }
-  await AsyncStorage.setItem(USER_TOKEN, accessToken);
-  return dispatch({ type: LOGIN_SUCCESS, payload: accessToken });
+  console.debug(`credential: ${JSON.stringify(credential)} \n token: ${token}`);
+  firebase
+    .auth()
+    .signInAndRetrieveDataWithCredential(credential)
+    .catch(error => {
+      console.debug(`firebase credential login error: ${error}`);
+      return dispatch({ type: LOGIN_CANCELED });
+    })
+    .then(() => {
+      return dispatch({ type: LOGIN_SUCCESS, payload: token });
+    });
 };
 
+export const doEmailLogin = (email, password) => async dispatch => {
+  const passwordValid = verifyPassword(password);
+  const emailValid = verifyEmail(email.trim());
+  if (!emailValid) {
+    return dispatch({
+      type: LOGIN_VALIDATION_ERROR,
+      payload: "Email seems invalid. Should include '@' and '.'"
+    });
+  }
+  if (!passwordValid) {
+    return dispatch({
+      type: LOGIN_VALIDATION_ERROR,
+      payload: "Passwords must be at least 8 characters!"
+    });
+  }
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .then(() => dispatch({ type: LOGIN_SUCCESS, payload: { email, password } }))
+    .catch(error => {
+      dispatch({
+        type: LOGIN_ERROR,
+        payload: "Error signing in. Invalid username or password."
+      });
+    });
+};
 
+export const signInTextUpdate = ({ prop, value }) => {
+  return {
+    type: SIGN_IN_UPDATE,
+    payload: { prop, value }
+  };
+};

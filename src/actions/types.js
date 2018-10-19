@@ -1,3 +1,11 @@
 export const LOGIN_CANCELED = 'login-canceled';
+export const LOGIN_VALIDATION_ERROR = 'login-validation-error';
+export const LOGIN_ERROR = 'login-error';
 export const LOGIN_SUCCESS = 'login-sucess';
+export const LOGOUT = 'logout';
 export const USER_TOKEN = 'userToken';
+export const SIGN_IN_UPDATE = 'sign-in-update';
+export const SIGN_UP_UPDATE = 'sign-up-update';
+export const SIGN_UP_VALIDATION_ERROR = 'signup-validation-error';
+export const SIGN_UP_ERROR = 'sign-up-error';
+export const AUTHENTICATED_KEY = "authenticated";

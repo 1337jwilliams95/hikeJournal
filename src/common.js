@@ -1,0 +1,1 @@
+export const getScreenWidth = () => Dimensions.get('window').width;

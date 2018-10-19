@@ -1,5 +1,5 @@
 import React from "react";
-import { USER_TOKEN } from '../actions/types';
+import { AUTHENTICATED_KEY } from '../actions/types';
 import {
   ActivityIndicator,
   AsyncStorage,
@@ -14,16 +14,12 @@ class AuthLoadingScreen extends React.Component {
     this._bootstrapAsync();
   }
 
-  // Fetch the token from storage then navigate to our appropriate place
+  
   _bootstrapAsync = async () => {
-    const userToken = await AsyncStorage.getItem(USER_TOKEN);
-
-    // This will switch to the App screen or Auth screen and this loading
-    // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(userToken ? "hike" : "auth");
+    const authenticated = await AsyncStorage.getItem(AUTHENTICATED_KEY)
+    this.props.navigation.navigate(authenticated ? "hike" : "auth");
   };
 
-  // Render any loading content that you like here
   render() {
     return (
       <View style={styles.container}>
