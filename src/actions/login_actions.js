@@ -65,25 +65,22 @@ const loginToFirebase = (credential, token, type, dispatch) => {
 };
 
 export const doEmailLogin = (email, password) => async dispatch => {
-  const passwordValid = verifyPassword(password);
-  const emailValid = verifyEmail(email.trim());
-  if (!emailValid) {
+  const passwordError = verifyPassword(password);
+  const emailError = verifyEmail(email.trim());
+  const validationError = emailError || passwordError;
+
+  if (validationError) {
     return dispatch({
       type: LOGIN_VALIDATION_ERROR,
-      payload: "Email seems invalid. Should include '@' and '.'"
+      payload: validationError
     });
   }
-  if (!passwordValid) {
-    return dispatch({
-      type: LOGIN_VALIDATION_ERROR,
-      payload: "Passwords must be at least 8 characters!"
-    });
-  }
+
   firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(() => dispatch({ type: LOGIN_SUCCESS, payload: { email, password } }))
-    .catch(error => {
+    .catch(() => {
       dispatch({
         type: LOGIN_ERROR,
         payload: "Error signing in. Invalid username or password."

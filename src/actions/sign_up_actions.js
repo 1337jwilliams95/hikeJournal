@@ -24,28 +24,16 @@ export const emailSignUp = ({
   password,
   confirmPassword
 }) => dispatch => {
-  const passwordSame = verifyPasswordsSame(password, confirmPassword);
-  const passwordValid = verifyPassword(password);
-  const emailValid = verifyEmail(email.trim());
+  const passwordSameError = verifyPasswordsSame(password, confirmPassword);
+  const passwordError = verifyPassword(password);
+  const emailError = verifyEmail(email.trim());
 
-  if (!emailValid) {
+  const validationError = emailError || passwordError || passwordSameError;
+
+  if (validationError) {
     return dispatch({
       type: SIGN_UP_VALIDATION_ERROR,
-      payload: "Email seems invalid. Should include '@' and '.'"
-    });
-  }
-
-  if (!passwordValid) {
-    return dispatch({
-      type: SIGN_UP_VALIDATION_ERROR,
-      payload: "Passwords must be at least 8 characters!"
-    });
-  }
-
-  if (!passwordSame) {
-    return dispatch({
-      type: SIGN_UP_VALIDATION_ERROR,
-      payload: "Passwords do no match!"
+      payload: validationError
     });
   }
 
