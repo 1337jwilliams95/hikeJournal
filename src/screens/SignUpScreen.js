@@ -8,9 +8,8 @@ import {
   FormValidationMessage
 } from "react-native-elements";
 import { emailSignUp, signUpTextUpdate } from "../actions";
-import { getScreenWidth } from "../common";
-
-const SCREEN_WIDTH = getScreenWidth();
+import { commonStyles } from "../common/common_styles";
+import { blue } from "../common/common_colors";
 
 class SignUpScreen extends Component {
   emailSignUp = () => {
@@ -22,21 +21,25 @@ class SignUpScreen extends Component {
   };
 
   validationError = () => {
-    if(this.props.error){
-      return <FormValidationMessage>{this.props.error}</FormValidationMessage>
+    if (this.props.error) {
+      return (
+        <FormValidationMessage>
+          {this.props.error}
+        </FormValidationMessage>
+      );
     }
-  }
+  };
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.textContainer}>
+      <View style={commonStyles.container}>
+        <View style={commonStyles.textContainer}>
           <Text style={{ fontSize: 20 }}>Hike Journal Sign Up</Text>
         </View>
-        <View style={styles.inputForm}>
+        <View style={commonStyles.inputForm}>
           <FormLabel>Email</FormLabel>
           <FormInput
-            autoCapitalize='none'
+            autoCapitalize="none"
             placeholder="Enter your email here"
             value={this.props.email}
             onChangeText={value =>
@@ -44,7 +47,7 @@ class SignUpScreen extends Component {
           />
           <FormLabel>Password</FormLabel>
           <FormInput
-            autoCapitalize='none'
+            autoCapitalize="none"
             secureTextEntry
             placeholder="Enter your password here"
             value={this.props.password}
@@ -53,7 +56,7 @@ class SignUpScreen extends Component {
           />
           <FormLabel>Confirm Password</FormLabel>
           <FormInput
-            autoCapitalize='none'
+            autoCapitalize="none"
             secureTextEntry
             placeholder="Enter your password again here"
             value={this.props.confirmPassword}
@@ -64,8 +67,8 @@ class SignUpScreen extends Component {
         </View>
         <Button
           title="Sign Up"
-          buttonStyle={styles.button}
-          backgroundColor="#28726E"
+          buttonStyle={[commonStyles.button, styles.signUpColor]}
+          backgroundColor={blue}
           onPress={this.emailSignUp}
         />
       </View>
@@ -74,27 +77,8 @@ class SignUpScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  inputForm: {
-    justifyContent: "flex-end",
-    alignItems: "flex-start",
-    marginTop: 5,
-    marginBottom: 5,
-    marginLeft: 20
-  },
-  button: {
-    marginTop: 5,
-    marginBottom: 5,
-    width: SCREEN_WIDTH - 20
-  },
-  textContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1
+  signUpColor: {
+    backgroundColor: blue
   }
 });
 
@@ -107,4 +91,6 @@ mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {emailSignUp, signUpTextUpdate})(SignUpScreen);
+export default connect(mapStateToProps, { emailSignUp, signUpTextUpdate })(
+  SignUpScreen
+);

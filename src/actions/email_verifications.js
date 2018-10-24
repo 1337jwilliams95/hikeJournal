@@ -1,6 +1,7 @@
-
 export const verifyEmail = email => {
-  return email && email.includes("@") && email.includes(".") ? "" : "Email seems invalid. Should include '@' and '.'";
+  return email && email.includes("@") && email.includes(".")
+    ? ""
+    : "Email seems invalid. Should include '@' and '.'";
 };
 
 export const verifyPasswordsSame = (password, confirmPassword) => {
@@ -8,5 +9,7 @@ export const verifyPasswordsSame = (password, confirmPassword) => {
 };
 
 export const verifyPassword = password => {
-  return password.length >= 8 ? "" : "Passwords must be at least 8 characters long!";
+  return password.length >= 8
+    ? ""
+    : "Passwords must be at least 8 characters long!";
 };

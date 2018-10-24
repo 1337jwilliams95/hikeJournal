@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { getScreenWidth } from "../common";
 import { connect } from "react-redux";
 import {
   doGoogleLogin,
@@ -8,29 +7,38 @@ import {
   doEmailLogin,
   signInTextUpdate
 } from "../actions";
-import { Button, FormLabel, FormInput, FormValidationMessage } from "react-native-elements";
-
-const SCREEN_WIDTH = getScreenWidth();
+import {
+  Button,
+  FormLabel,
+  FormInput,
+  FormValidationMessage
+} from "react-native-elements";
+import { commonStyles } from "../common/common_styles";
+import { red, blue, green } from "../common/common_colors";
 
 class AuthScreen extends Component {
   verificationError() {
-    if(this.props.error){
-      return <FormValidationMessage>{this.props.error}</FormValidationMessage>
+    if (this.props.error) {
+      return (
+        <FormValidationMessage>
+          {this.props.error}
+        </FormValidationMessage>
+      );
     }
   }
 
   render() {
     return (
       <View style={styles.background}>
-        <View style={styles.container}>
-          <View style={styles.textContainer}>
+        <View style={commonStyles.container}>
+          <View style={commonStyles.textContainer}>
             <Text style={styles.text}>Hike Journal</Text>
           </View>
 
-          <View style={styles.inputForm}>
+          <View style={commonStyles.inputForm}>
             <FormLabel>Email</FormLabel>
             <FormInput
-            autoCapitalize='none'
+              autoCapitalize="none"
               onChangeText={value =>
                 this.props.signInTextUpdate({ prop: "email", value })}
               placeholder="Enter your email here"
@@ -39,7 +47,7 @@ class AuthScreen extends Component {
             <FormLabel>Password</FormLabel>
             <FormInput
               secureTextEntry
-              autoCapitalize='none'
+              autoCapitalize="none"
               onChangeText={value =>
                 this.props.signInTextUpdate({ prop: "password", value })}
               placeholder="Enter your password here"
@@ -49,21 +57,18 @@ class AuthScreen extends Component {
           {this.verificationError()}
           <Button
             title="Sign In"
-            buttonStyle={styles.button}
-            backgroundColor="#9D961C"
+            buttonStyle={[commonStyles.button, styles.signInButton]}
             onPress={() =>
               this.props.doEmailLogin(this.props.email, this.props.password)}
           />
           <Button
             title="Continue with Facebook"
-            buttonStyle={styles.button}
-            backgroundColor="#28726E"
+            buttonStyle={[commonStyles.button, styles.facebookButton]}
             onPress={this.props.doFacebookLogin}
           />
           <Button
             title="Continue with Google"
-            buttonStyle={styles.button}
-            backgroundColor="#943E0F"
+            buttonStyle={[commonStyles.button, styles.googleButton]}
             onPress={this.props.doGoogleLogin}
           />
         </View>
@@ -77,29 +82,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     flex: 1
   },
-  container: {
-    flex: 1,
-    justifyContent: "flex-end",
-    alignItems: "center",
-    marginLeft: 10,
-    marginRight: 10
+  signInButton: {
+    backgroundColor: green
   },
-  button: {
-    marginTop: 5,
-    marginBottom: 5,
-    width: SCREEN_WIDTH - 20
+  facebookButton: {
+    backgroundColor: blue
   },
-  inputForm: {
-    justifyContent: "flex-end",
-    alignItems: "flex-start",
-    marginTop: 5,
-    marginBottom: 5,
-    marginLeft: 20
-  },
-  textContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1
+  googleButton: {
+    backgroundColor: red
   },
   text: {
     fontSize: 18
