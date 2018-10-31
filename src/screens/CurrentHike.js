@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 class CurrentHike extends Component {
   render() {
@@ -8,7 +8,7 @@ class CurrentHike extends Component {
         <Text>CurrentHike</Text>
       </View>
     );
-  };
+  }
 }
 
 const styles = StyleSheet.create({

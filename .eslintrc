@@ -1,6 +1,7 @@
 {
   "extends": "rallycoding",
   "rules": {
+    "no-underscore-dangle": 0,
     "prefer-const": [
       "error",
       {

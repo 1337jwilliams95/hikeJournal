@@ -1,26 +1,26 @@
-import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { connect } from "react-redux";
 import {
   Button,
-  FormLabel,
   FormInput,
+  FormLabel,
   FormValidationMessage
-} from "react-native-elements";
-import { emailSignUp, signUpTextUpdate } from "../actions";
-import { commonStyles } from "../common/common_styles";
-import { blue } from "../common/common_colors";
+} from 'react-native-elements';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { connect } from 'react-redux';
+import { emailSignUp, signUpTextUpdate } from '../actions';
+import { blue } from '../common/common_colors';
+import { commonStyles } from '../common/common_styles';
 
 class SignUpScreen extends Component {
-  emailSignUp = () => {
+  emailSignUp() {
     this.props.emailSignUp({
       email: this.props.email,
       password: this.props.password,
       confirmPassword: this.props.confirmPassword
     });
-  };
+  }
 
-  validationError = () => {
+  validationError() {
     if (this.props.error) {
       return (
         <FormValidationMessage>
@@ -28,7 +28,7 @@ class SignUpScreen extends Component {
         </FormValidationMessage>
       );
     }
-  };
+  }
 
   render() {
     return (
@@ -43,7 +43,7 @@ class SignUpScreen extends Component {
             placeholder="Enter your email here"
             value={this.props.email}
             onChangeText={value =>
-              this.props.signUpTextUpdate({ prop: "email", value })}
+              this.props.signUpTextUpdate({ prop: 'email', value })}
           />
           <FormLabel>Password</FormLabel>
           <FormInput
@@ -52,7 +52,7 @@ class SignUpScreen extends Component {
             placeholder="Enter your password here"
             value={this.props.password}
             onChangeText={value =>
-              this.props.signUpTextUpdate({ prop: "password", value })}
+              this.props.signUpTextUpdate({ prop: 'password', value })}
           />
           <FormLabel>Confirm Password</FormLabel>
           <FormInput
@@ -61,7 +61,7 @@ class SignUpScreen extends Component {
             placeholder="Enter your password again here"
             value={this.props.confirmPassword}
             onChangeText={value =>
-              this.props.signUpTextUpdate({ prop: "confirmPassword", value })}
+              this.props.signUpTextUpdate({ prop: 'confirmPassword', value })}
           />
           {this.validationError()}
         </View>
@@ -82,14 +82,12 @@ const styles = StyleSheet.create({
   }
 });
 
-mapStateToProps = state => {
-  return {
-    email: state.signUpForm.email,
-    password: state.signUpForm.password,
-    confirmPassword: state.signUpForm.confirmPassword,
-    error: state.signUpForm.error
-  };
-};
+const mapStateToProps = state => ({
+  email: state.signUpForm.email,
+  password: state.signUpForm.password,
+  confirmPassword: state.signUpForm.confirmPassword,
+  error: state.signUpForm.error
+});
 
 export default connect(mapStateToProps, { emailSignUp, signUpTextUpdate })(
   SignUpScreen

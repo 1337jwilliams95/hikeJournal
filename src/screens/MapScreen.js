@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 class MapScreen extends Component {
   render() {
@@ -8,7 +8,7 @@ class MapScreen extends Component {
         <Text>MapScreen</Text>
       </View>
     );
-  };
+  }
 }
 
 const styles = StyleSheet.create({
