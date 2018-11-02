@@ -1,7 +1,8 @@
 {
   "extends": "rallycoding",
   "rules": {
-    "no-underscore-dangle": 0,
+    "max-len": "warn",
+    "no-underscore-dangle": "off",
     "prefer-const": [
       "error",
       {
@@ -9,13 +10,6 @@
         "ignoreReadBeforeAssign": false
       }
     ],
-    "sort-imports": [
-      "error",
-      {
-        "ignoreCase": false,
-        "ignoreMemberSort": false,
-        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
-      }
-    ]
+    "sort-imports": "off",
   }
 }
