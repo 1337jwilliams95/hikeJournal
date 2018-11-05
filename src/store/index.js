@@ -1,9 +1,9 @@
-import { createStore, compose, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import { applyMiddleware, compose, createStore } from 'redux';
 import firebase from 'firebase';
-import reducers from '../reducers'
+import thunk from 'redux-thunk';
 import { LOGIN_SUCCESS, LOGOUT } from '../actions/types';
-import { navigate } from '../navigators/NavigatorService'
+import { navigate } from '../navigators/NavigatorService';
+import reducers from '../reducers';
 
 
 export const configureStore = () => {
@@ -11,24 +11,21 @@ export const configureStore = () => {
     reducers,
     {},
     compose(applyMiddleware(thunk))
-  )
+  );
 
   store.dispatch(dispatch => {
     firebase.auth().onAuthStateChanged(user => {
-      if(user){
+      if (user) {
         navigate('hike');
         user.getIdToken().then(data => 
-          dispatch({type: LOGIN_SUCCESS, payload: data})
-          )
-      }else {
+          dispatch({ type: LOGIN_SUCCESS, payload: data })
+          );
+      } else {
         navigate('auth');
-        dispatch({type: LOGOUT})
+        dispatch({ type: LOGOUT });
       }
-    })
+    });
   });
-  return store; 
-
-}
-
-
+  return store;
+};
 

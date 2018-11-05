@@ -1,16 +1,17 @@
 import {
-  SIGN_UP_UPDATE,
-  SIGN_UP_VALIDATION_ERROR,
   LOGIN_SUCCESS,
-  SIGN_UP_ERROR
-} from "../actions/types";
+  SIGN_UP_ERROR,
+  SIGN_UP_UPDATE,
+  SIGN_UP_VALIDATION_ERROR
+} from '../actions/types';
+
 const INITIAL_STATE = {
-  email: "",
-  password: "",
-  confirmPassword: "",
-  errorMessage: ""
+  email: '',
+  password: '',
+  confirmPassword: '',
+  errorMessage: ''
 };
-export default function(state = INITIAL_STATE, action) {
+export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
     case SIGN_UP_UPDATE:
       return {
@@ -19,9 +20,9 @@ export default function(state = INITIAL_STATE, action) {
         error: false
       };
     case SIGN_UP_VALIDATION_ERROR:
-      return { ...state, password: "", confirmPassword: "", error: action.payload };
+      return { ...state, password: '', confirmPassword: '', error: action.payload };
     case SIGN_UP_ERROR:
-      return {...INITIAL_STATE, error: action.payload}
+      return { ...INITIAL_STATE, error: action.payload };
     case LOGIN_SUCCESS:
       return INITIAL_STATE;
     default:

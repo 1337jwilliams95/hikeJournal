@@ -8,4 +8,4 @@ export const SIGN_IN_UPDATE = 'sign-in-update';
 export const SIGN_UP_UPDATE = 'sign-up-update';
 export const SIGN_UP_VALIDATION_ERROR = 'signup-validation-error';
 export const SIGN_UP_ERROR = 'sign-up-error';
-export const AUTHENTICATED_KEY = "authenticated";
+export const AUTHENTICATED_KEY = 'authenticated';

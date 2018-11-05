@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import firebase from 'firebase';
 
 
 class HikeSettings extends Component {
-  logOut = () => {
+  logOut() {
     firebase.auth().signOut();
   }
+
   render() {
     return (
       <View style={styles.container}>
@@ -17,7 +18,7 @@ class HikeSettings extends Component {
         />
       </View>
     );
-  };
+  }
 }
 
 const styles = StyleSheet.create({

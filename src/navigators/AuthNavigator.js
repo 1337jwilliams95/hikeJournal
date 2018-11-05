@@ -1,8 +1,8 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation';
 import AuthScreen from '../screens/AuthScreen';
 import SignUpScreen from '../screens/SignUpScreen';
+
 const AuthNavigator = createBottomTabNavigator({
   login: {
     screen: AuthScreen,
@@ -20,8 +20,7 @@ const AuthNavigator = createBottomTabNavigator({
   navigationOptions: {
     gestureEnabled: true
   }
-})
+});
   
-
 const styles = StyleSheet.create({});
 export default AuthNavigator;

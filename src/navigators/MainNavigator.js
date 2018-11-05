@@ -1,9 +1,9 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { createSwitchNavigator } from "react-navigation";
-import AuthNavigator from "./AuthNavigator";
-import HikeNavigator from "./HikeNavigator";
+import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { createSwitchNavigator } from 'react-navigation';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
+import AuthNavigator from './AuthNavigator';
+import HikeNavigator from './HikeNavigator';
 
 const MainNavigator = createSwitchNavigator({
   authLoading: {

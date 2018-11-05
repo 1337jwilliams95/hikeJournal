@@ -1,20 +1,21 @@
-import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { connect } from "react-redux";
-import {
-  doGoogleLogin,
-  doFacebookLogin,
-  doEmailLogin,
-  signInTextUpdate
-} from "../actions";
 import {
   Button,
-  FormLabel,
   FormInput,
+  FormLabel,
   FormValidationMessage
-} from "react-native-elements";
-import { commonStyles } from "../common/common_styles";
-import { red, blue, green } from "../common/common_colors";
+} from 'react-native-elements';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { connect } from 'react-redux';
+
+import { blue, green, red } from '../common/common_colors';
+import {
+  doEmailLogin,
+  doFacebookLogin,
+  doGoogleLogin,
+  signInTextUpdate
+} from '../actions';
+import { commonStyles } from '../common/common_styles';
 
 class AuthScreen extends Component {
   verificationError() {
@@ -40,7 +41,7 @@ class AuthScreen extends Component {
             <FormInput
               autoCapitalize="none"
               onChangeText={value =>
-                this.props.signInTextUpdate({ prop: "email", value })}
+                this.props.signInTextUpdate({ prop: 'email', value })}
               placeholder="Enter your email here"
               value={this.props.email}
             />
@@ -49,7 +50,7 @@ class AuthScreen extends Component {
               secureTextEntry
               autoCapitalize="none"
               onChangeText={value =>
-                this.props.signInTextUpdate({ prop: "password", value })}
+                this.props.signInTextUpdate({ prop: 'password', value })}
               placeholder="Enter your password here"
               value={this.props.password}
             />
@@ -79,7 +80,7 @@ class AuthScreen extends Component {
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: "#FFF",
+    backgroundColor: '#FFF',
     flex: 1
   },
   signInButton: {
@@ -96,13 +97,12 @@ const styles = StyleSheet.create({
   }
 });
 
-mapStateToProps = state => {
-  return {
-    email: state.signInForm.email,
-    password: state.signInForm.password,
-    error: state.signInForm.error
-  };
-};
+const mapStateToProps = state => ({
+  email: state.signInForm.email,
+  password: state.signInForm.password,
+  error: state.signInForm.error
+});
+
 export default connect(mapStateToProps, {
   doFacebookLogin,
   doEmailLogin,

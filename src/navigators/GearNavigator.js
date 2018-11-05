@@ -1,9 +1,8 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { createBottomTabNavigator } from "react-navigation";
-import GearClothesScreen from "../screens/GearClothesScreen";
-import GearShelterScreen from "../screens/GearShelterScreen";
-import GearMiscScreen from "../screens/GearMiscScreen";
+import { StyleSheet } from 'react-native';
+import { createBottomTabNavigator } from 'react-navigation';
+import GearClothesScreen from '../screens/GearClothesScreen';
+import GearMiscScreen from '../screens/GearMiscScreen';
+import GearShelterScreen from '../screens/GearShelterScreen';
 
 const GearNavigator = createBottomTabNavigator({
   clothes: {

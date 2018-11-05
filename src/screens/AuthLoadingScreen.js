@@ -1,12 +1,12 @@
-import React from "react";
-import { AUTHENTICATED_KEY } from '../actions/types';
+import React from 'react';
 import {
   ActivityIndicator,
   AsyncStorage,
   StatusBar,
   StyleSheet,
   View
-} from "react-native";
+} from 'react-native';
+import { AUTHENTICATED_KEY } from '../actions/types';
 
 class AuthLoadingScreen extends React.Component {
   constructor(props) {
@@ -16,8 +16,8 @@ class AuthLoadingScreen extends React.Component {
 
   
   _bootstrapAsync = async () => {
-    const authenticated = await AsyncStorage.getItem(AUTHENTICATED_KEY)
-    this.props.navigation.navigate(authenticated ? "hike" : "auth");
+    const authenticated = await AsyncStorage.getItem(AUTHENTICATED_KEY);
+    this.props.navigation.navigate(authenticated ? 'hike' : 'auth');
   };
 
   render() {
@@ -33,8 +33,8 @@ class AuthLoadingScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 
