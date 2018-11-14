@@ -1,0 +1,19 @@
+{
+  "userId": {
+    "settings": {
+      "north-bound": true,
+      "hike-type": "budget",
+      "start-date": "mm/dd/yyyy"
+    },
+    "currentHike": {
+      "events": {},
+      "locations": {},
+      "friends": {},
+      "gear": {},
+      "info": {
+        "phone": ""
+      }
+    },
+    "pastHikes": []
+  }
+}

@@ -1,5 +1,3 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "react-navigation";
 import GearClothesScreen from "../screens/GearClothesScreen";
 import GearShelterScreen from "../screens/GearShelterScreen";
@@ -7,15 +5,23 @@ import GearMiscScreen from "../screens/GearMiscScreen";
 
 const GearNavigator = createBottomTabNavigator({
   clothes: {
-    screen: GearClothesScreen
+    screen: GearClothesScreen,
+    navigationOptions: {
+      title: "Clothing"
+    }
   },
   shelter: {
-    screen: GearShelterScreen
+    screen: GearShelterScreen,
+    navigationOptions: {
+      title: "Shelter"
+    }
   },
   miscGear: {
-    screen: GearMiscScreen
+    screen: GearMiscScreen,
+    navigationOptions: {
+      title: "Misc."
+    }
   }
 });
 
-const styles = StyleSheet.create({});
 export default GearNavigator;

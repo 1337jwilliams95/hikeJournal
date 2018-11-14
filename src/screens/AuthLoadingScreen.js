@@ -1,5 +1,5 @@
 import React from "react";
-import { AUTHENTICATED_KEY } from '../actions/types';
+import { AUTHENTICATED_KEY } from "../actions/types";
 import {
   ActivityIndicator,
   AsyncStorage,
@@ -14,10 +14,9 @@ class AuthLoadingScreen extends React.Component {
     this._bootstrapAsync();
   }
 
-  
   _bootstrapAsync = async () => {
-    const authenticated = await AsyncStorage.getItem(AUTHENTICATED_KEY)
-    this.props.navigation.navigate(authenticated ? "hike" : "auth");
+    const authenticated = await AsyncStorage.getItem(AUTHENTICATED_KEY);
+    this.props.navigation.navigate(authenticated ? "hikeLoading" : "auth");
   };
 
   render() {

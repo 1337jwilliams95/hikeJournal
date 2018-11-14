@@ -1,22 +1,34 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
 import { createSwitchNavigator } from "react-navigation";
 import AuthNavigator from "./AuthNavigator";
-import HikeNavigator from "./HikeNavigator";
-import AuthLoadingScreen from '../screens/AuthLoadingScreen';
+import AuthLoadingScreen from "../screens/AuthLoadingScreen";
+import DrawerWrapper from "./DrawerWrapper";
+import HikeLoadingScreen from "../screens/HikeLoadingScreen";
+import HikeSelection from "../screens/HikeSelection";
 
-const MainNavigator = createSwitchNavigator({
-  authLoading: {
-    screen: AuthLoadingScreen
+const MainNavigator = createSwitchNavigator(
+  {
+    authLoading: {
+      screen: AuthLoadingScreen
+    },
+    auth: {
+      screen: AuthNavigator
+    },
+    hikeSelection: {
+      screen: HikeSelection
+    },
+    hikeLoading: {
+      screen: HikeLoadingScreen
+    },
+    mainApp: {
+      screen: DrawerWrapper
+    }
   },
-  auth: {
-    screen: AuthNavigator
-  },
-  hike: {
-    screen: HikeNavigator
+  {
+    initialRouteName: "authLoading",
+    navigationOptions: {
+      title: "Hike Journal"
+    }
   }
-}, {
-  initialRouteName: 'authLoading'
-});
+);
 
 export default MainNavigator;

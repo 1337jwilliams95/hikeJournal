@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
-import facebookLogin from "../reducers/AuthReducers";
-import signInForm from "../reducers/SignInFormReducers";
-import signUpForm from "../reducers/SignUpFormReducers";
+import auth from "./AuthReducers";
+import signInForm from "./SignInFormReducers";
+import signUpForm from "./SignUpFormReducers";
+import hikeSelection from "./HikeSelectionReducer";
 
 export default combineReducers({
-  facebookLogin,
+  auth,
   signInForm,
-  signUpForm
+  signUpForm,
+  hikeSelection
 });
