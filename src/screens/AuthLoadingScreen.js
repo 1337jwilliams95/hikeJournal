@@ -1,5 +1,6 @@
 import React from "react";
 import { AUTHENTICATED_KEY } from "../actions/types";
+
 import {
   ActivityIndicator,
   AsyncStorage,

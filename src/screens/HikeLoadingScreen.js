@@ -16,16 +16,17 @@ class HikeLoadingScreen extends React.Component {
   }
 
   _bootstrapAsync = async () => {
-    const { userId } = await firebase.auth();
-    if (userId) {
-      const currentHike = await firebase
-        .database()
-        .ref(`users/${userId}/pastHikes`)
-        .on("value", snapshot => {
-          dispatch({ type: HIKE_FETCH_SUCCESS, payload: snapshot.val() });
-        });
-      this.props.navigation.navigate(currentHike ? "mainApp" : "hikeSelection");
-    }
+    this.props.navigation.navigate("mainApp");
+    // const { userId } = await firebase.auth();
+    // if (userId) {
+    //   const currentHike = await firebase
+    //     .database()
+    //     .ref(`users/${userId}/pastHikes`)
+    //     .on("value", snapshot => {
+    //       dispatch({ type: HIKE_FETCH_SUCCESS, payload: snapshot.val() });
+    //     });
+    //   this.props.navigation.navigate(currentHike ? "mainApp" : "hikeSelection");
+    // }
   };
 
   render() {

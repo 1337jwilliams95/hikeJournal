@@ -20,6 +20,7 @@ export const configureStore = () => {
         });
       } else {
         navigate("auth");
+
         dispatch({ type: LOGOUT });
       }
     });

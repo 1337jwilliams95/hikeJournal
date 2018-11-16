@@ -1,23 +1,22 @@
-import firebase from "firebase";
+import firebase from 'firebase';
 
 import {
   LOGIN_SUCCESS,
-  SIGN_UP_VALIDATION_ERROR,
-  SIGN_UP_UPDATE
-} from "./types";
+  SIGN_UP_ERROR,
+  SIGN_UP_UPDATE,
+  SIGN_UP_VALIDATION_ERROR
+} from './types';
 
 import {
   verifyEmail,
-  verifyPasswordsSame,
-  verifyPassword
-} from "./email_verifications";
+  verifyPassword,
+  verifyPasswordsSame
+} from './email_verifications';
 
-export const signUpTextUpdate = ({ prop, value }) => {
-  return {
+export const signUpTextUpdate = ({ prop, value }) => ({
     type: SIGN_UP_UPDATE,
     payload: { prop, value }
-  };
-};
+  });
 
 export const emailSignUp = ({
   email,
@@ -45,7 +44,7 @@ export const emailSignUp = ({
       console.log(error);
       dispatch({
         type: SIGN_UP_ERROR,
-        payload: "Error signing up! Email may already be in use."
+        payload: 'Error signing up! Email may already be in use.'
       });
     });
 };
