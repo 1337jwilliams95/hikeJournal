@@ -1,31 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import firebase from 'firebase';
 
-
-class HikeSettings extends Component {
-  logOut() {
-    firebase.auth().signOut();
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Button
-          title="Log out"
-          onPress={this.logOut}
-        />
-      </View>
-    );
-  }
-}
+const logOut = () => firebase.auth().signOut();
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
+
+function HikeSettings() {
+  return (
+    <View style={styles.container}>
+      <Button
+        title="Log out"
+        onPress={logOut}
+      />
+    </View>
+  );
+}
+
 export default HikeSettings;

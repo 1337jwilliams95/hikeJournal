@@ -1,15 +1,7 @@
 {
-  "extends": "rallycoding",
+  "extends": "airbnb",
   "rules": {
-    "max-len": "warn",
     "no-underscore-dangle": "off",
-    "prefer-const": [
-      "error",
-      {
-        "destructuring": "any",
-        "ignoreReadBeforeAssign": false
-      }
-    ],
-    "sort-imports": "off",
+    "react/jsx-filename-extension": "off"
   }
 }
