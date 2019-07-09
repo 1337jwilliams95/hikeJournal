@@ -12,6 +12,12 @@ import { blue } from '../common/common_colors';
 import { commonStyles } from '../common/common_styles';
 
 class SignUpScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.emailSignUp = this.emailSignUp.bind(this);
+    this.validationError = this.validationError.bind(this);
+  }
+
   emailSignUp() {
     this.props.emailSignUp({
       email: this.props.email,
