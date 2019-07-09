@@ -77,7 +77,7 @@ class SignUpScreen extends Component {
           title="Sign Up"
           buttonStyle={[commonStyles.button, styles.signUpColor]}
           backgroundColor={blue}
-          onPress={signUp({ email, password, confirmPassword })}
+          onPress={() => signUp({ email, password, confirmPassword })}
         />
       </View>
     );
@@ -90,10 +90,10 @@ SignUpScreen.propTypes = {
   confirmPassword: PropTypes.string.isRequired,
   signUpTextUpdate: PropTypes.func.isRequired,
   emailSignUp: PropTypes.func.isRequired,
-  error: PropTypes.string,
+  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
-SignUpScreen.defaultProps = { error: '' };
+SignUpScreen.defaultProps = { error: null };
 
 const mapStateToProps = state => ({
   email: state.signUpForm.email,
