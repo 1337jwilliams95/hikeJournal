@@ -2,14 +2,14 @@ import {
   LOGIN_SUCCESS,
   SIGN_UP_ERROR,
   SIGN_UP_UPDATE,
-  SIGN_UP_VALIDATION_ERROR
+  SIGN_UP_VALIDATION_ERROR,
 } from '../actions/types';
 
 const INITIAL_STATE = {
   email: '',
   password: '',
   confirmPassword: '',
-  errorMessage: ''
+  errorMessage: '',
 };
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -17,10 +17,12 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         [action.payload.prop]: action.payload.value,
-        error: false
+        error: false,
       };
     case SIGN_UP_VALIDATION_ERROR:
-      return { ...state, password: '', confirmPassword: '', error: action.payload };
+      return {
+        ...state, password: '', confirmPassword: '', error: action.payload,
+      };
     case SIGN_UP_ERROR:
       return { ...INITIAL_STATE, error: action.payload };
     case LOGIN_SUCCESS:

@@ -6,20 +6,18 @@ import { navigate } from '../navigators/NavigatorService';
 import reducers from '../reducers';
 
 
-export const configureStore = () => {
+export default () => {
   const store = createStore(
     reducers,
     {},
-    compose(applyMiddleware(thunk))
+    compose(applyMiddleware(thunk)),
   );
 
-  store.dispatch(dispatch => {
-    firebase.auth().onAuthStateChanged(user => {
+  store.dispatch((dispatch) => {
+    firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         navigate('hike');
-        user.getIdToken().then(data => 
-          dispatch({ type: LOGIN_SUCCESS, payload: data })
-          );
+        user.getIdToken().then(data => dispatch({ type: LOGIN_SUCCESS, payload: data }));
       } else {
         navigate('auth');
         dispatch({ type: LOGOUT });
@@ -28,4 +26,3 @@ export const configureStore = () => {
   });
   return store;
 };
-

@@ -1,12 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   ActivityIndicator,
   AsyncStorage,
   StatusBar,
-  StyleSheet,
-  View
+  View,
 } from 'react-native';
 import { AUTHENTICATED_KEY } from '../actions/types';
+
+const styles = {
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+};
 
 class AuthLoadingScreen extends React.Component {
   constructor(props) {
@@ -14,11 +22,11 @@ class AuthLoadingScreen extends React.Component {
     this._bootstrapAsync();
   }
 
-  
-  _bootstrapAsync = async () => {
+  async _bootstrapAsync() {
+    const { navigation } = this.props;
     const authenticated = await AsyncStorage.getItem(AUTHENTICATED_KEY);
-    this.props.navigation.navigate(authenticated ? 'hike' : 'auth');
-  };
+    navigation.navigate(authenticated ? 'hike' : 'auth');
+  }
 
   render() {
     return (
@@ -30,12 +38,8 @@ class AuthLoadingScreen extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-});
+AuthLoadingScreen.propTypes = {
+  navigation: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default AuthLoadingScreen;

@@ -1,4 +1,6 @@
-import { LOGIN_ERROR, LOGIN_SUCCESS, LOGIN_VALIDATION_ERROR, SIGN_IN_UPDATE } from '../actions/types';
+import {
+  LOGIN_ERROR, LOGIN_SUCCESS, LOGIN_VALIDATION_ERROR, SIGN_IN_UPDATE,
+} from '../actions/types';
 
 const INITIAL_STATE = { email: '', password: '', error: '' };
 export default function (state = INITIAL_STATE, action) {
@@ -7,7 +9,7 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         [action.payload.prop]: action.payload.value,
-        error: ''
+        error: '',
       };
     case LOGIN_VALIDATION_ERROR:
       return { ...state, password: '', error: action.payload };

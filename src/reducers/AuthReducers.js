@@ -6,7 +6,7 @@ export default function (state = {}, action) {
     case LOGIN_SUCCESS:
       AsyncStorage.setItem(AUTHENTICATED_KEY, 'true');
       return { token: action.payload };
-    case LOGOUT: 
+    case LOGOUT:
       AsyncStorage.setItem(AUTHENTICATED_KEY, '');
       return { token: null };
     default:
