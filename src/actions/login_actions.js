@@ -32,6 +32,7 @@ export const doFacebookLogin = () => async dispatch => {
 };
 
 export const doGoogleLogin = () => async dispatch => {
+  // TODO: Figure out error handling
   const { type, idToken, accessToken } = await Google.logInAsync({
     androidClientId: GOOGLE_ANDROID_CLIENT_ID,
     iosClientId: GOOGLE_IOS_CLIENT_ID,
